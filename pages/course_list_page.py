@@ -1,10 +1,25 @@
+from dataclasses import dataclass
+
+from components.navigation.navbar_component import NavbarComponent
+from components.navigation.sidebar_component import SidebarComponent
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
+
+@dataclass
+class CheckVisibleCourseCardParams:
+    index: int  # Индекс карточки в списке курсов
+    title: str  # Ожидаемый заголовок курса
+    max_score: str  # Ожидаемый максимальный балл
+    min_score: str  # Ожидаемый минимальный балл
+    estimated_time: str  # Ожидаемое время прохождения
 
 class CoursesListPage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
+
+        self.navbar = NavbarComponent(page)
+        self.sidebar = SidebarComponent(page)
 
         self.courses_title = page.get_by_test_id('courses-list-toolbar-title-text')
         self.create_course_button = page.get_by_test_id('courses-list-toolbar-create-course-button')
@@ -22,7 +37,6 @@ class CoursesListPage(BasePage):
         self.empty_view_icon = page.get_by_test_id('courses-list-empty-view-icon')
         self.empty_view_title = page.get_by_test_id('courses-list-empty-view-title-text')
         self.empty_view_description = page.get_by_test_id('courses-list-empty-view-description-text')
-
 
     def check_visible_courses_title(self):
         expect(self.courses_title).to_be_visible()
@@ -47,24 +61,20 @@ class CoursesListPage(BasePage):
 
     def check_visible_course_card(
             self,
-            index: int,  # Индекс карточки в списке курсов
-            title: str,  # Ожидаемый заголовок курса
-            max_score: str,  # Ожидаемый максимальный балл
-            min_score: str,  # Ожидаемый минимальный балл
-            estimated_time: str  # Ожидаемое время прохождения
+            params: CheckVisibleCourseCardParams
     ):
-        expect(self.course_image.nth(index)).to_be_visible()
+        expect(self.course_image.nth(params.index)).to_be_visible()
 
-        expect(self.course_title.nth(index)).to_be_visible()
-        expect(self.course_title.nth(index)).to_have_text(title)
+        expect(self.course_title.nth(params.index)).to_be_visible()
+        expect(self.course_title.nth(params.index)).to_have_text(params.title)
 
-        expect(self.course_max_score_text.nth(index)).to_be_visible()
-        expect(self.course_max_score_text.nth(index)).to_have_text(f"Max score: {max_score}")
+        expect(self.course_max_score_text.nth(params.index)).to_be_visible()
+        expect(self.course_max_score_text.nth(params.index)).to_have_text(f"Max score: {params.max_score}")
 
-        expect(self.course_min_score_text.nth(index)).to_be_visible()
-        expect(self.course_min_score_text.nth(index)).to_have_text(f"Min score: {min_score}")
+        expect(self.course_min_score_text.nth(params.index)).to_be_visible()
+        expect(self.course_min_score_text.nth(params.index)).to_have_text(f"Min score: {params.min_score}")
 
-        expect(self.course_estimated_time_text.nth(index)).to_be_visible()
-        expect(self.course_estimated_time_text.nth(index)).to_have_text(
-            f"Estimated time: {estimated_time}"
+        expect(self.course_estimated_time_text.nth(params.index)).to_be_visible()
+        expect(self.course_estimated_time_text.nth(params.index)).to_have_text(
+            f"Estimated time: {params.estimated_time}"
         )
