@@ -2,7 +2,9 @@ from playwright.sync_api import Page
 
 from pages.base_page import BasePage
 
-from components.dashboard.dashboard_toolbar_view_component import DashboardToolbarViewComponent
+from components.dashboard.dashboard_toolbar_view_component import (
+    DashboardToolbarViewComponent,
+)
 from components.charts.chart_view_component import ChartViewComponent
 from components.navigation.navbar_component import NavbarComponent
 from components.navigation.sidebar_component import SidebarComponent
