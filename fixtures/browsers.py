@@ -6,14 +6,14 @@ from pages.authentication.registration_page import RegistrationPage
 
 @pytest.fixture
 def chromium_page(playwright: Playwright) -> Page:  # noqa
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.firefox.launch(headless=False)
     yield browser.new_page()  # noqa
     browser.close()
 
 
 @pytest.fixture(scope="session")
 def initialize_browser_state(playwright: Playwright):
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.firefox.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
 
@@ -29,7 +29,7 @@ def initialize_browser_state(playwright: Playwright):
 
 @pytest.fixture()
 def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:  # noqa
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.firefox.launch(headless=False)
     context = browser.new_context(storage_state="browser_state.json")
     yield context.new_page()  # noqa
     browser.close()
