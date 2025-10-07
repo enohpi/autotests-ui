@@ -17,7 +17,7 @@ class CreateCourseFormComponent(BaseComponent):
         self.max_score_input = Input(page, "create-course-form-max-score-input", "Max score")
         self.min_score_input = Input(page, "create-course-form-min-score-input", "Min score")
 
-    @allure.step("Check visible create course form '{title}', '{estimated_time}', '{description}', '{max_score}', '{min_score}")
+    @allure.step("Check visible create course form")
     def check_visible(
             self,
             title: str,
@@ -41,7 +41,7 @@ class CreateCourseFormComponent(BaseComponent):
         self.min_score_input.check_visible()
         self.min_score_input.check_have_value(min_score)
 
-    @allure.step("Fill create course form '{title}', '{estimated_time}', '{description}', '{max_score}', '{min_score}'")
+    @allure.step("Fill create course form")
     def fill(
             self,
             title: str,
