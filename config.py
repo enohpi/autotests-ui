@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     def initialize(cls) -> Self:
         videos_dir = DirectoryPath("./videos")
         tracing_dir = DirectoryPath("./tracing")
-        browser_state_file = FilePath("browser-state.json")
+        browser_state_file = FilePath("browser_state.json")
 
         videos_dir.mkdir(exist_ok=True)
         tracing_dir.mkdir(exist_ok=True)
