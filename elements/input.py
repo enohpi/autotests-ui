@@ -10,6 +10,10 @@ logger = get_logger("INPUT")
 
 
 class Input(BaseElement):
+    @property
+    def type_of(self) -> str:
+        return "input"
+
     def get_locator(self, nth: int = 0, **kwargs) -> Locator:
         return super().get_locator(nth, **kwargs).locator("input")
 
